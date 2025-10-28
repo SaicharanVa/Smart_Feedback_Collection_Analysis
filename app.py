@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from models import db, User, Feedback
-from datetime import datetime
+from datetime import datetime, timedelta
 import csv
 from io import StringIO, BytesIO
 from reportlab.lib.pagesizes import letter
@@ -179,19 +179,38 @@ def get_summary():
     if current_user.role != 'admin':
         return jsonify({'error': 'Unauthorized'}), 403
     
-    total_feedback = Feedback.query.count()
+    time_filter = request.args.get('time_filter', 'all')
     
-    positive = Feedback.query.filter_by(sentiment='Positive').count()
-    negative = Feedback.query.filter_by(sentiment='Negative').count()
-    neutral = Feedback.query.filter_by(sentiment='Neutral').count()
+    query = Feedback.query
+    if time_filter == '10days':
+        cutoff_date = datetime.utcnow() - timedelta(days=10)
+        query = query.filter(Feedback.timestamp >= cutoff_date)
+    elif time_filter == '1month':
+        cutoff_date = datetime.utcnow() - timedelta(days=30)
+        query = query.filter(Feedback.timestamp >= cutoff_date)
     
-    feedbacks_with_rating = Feedback.query.filter(Feedback.rating.isnot(None)).all()
+    total_feedback = query.count()
+    
+    positive = query.filter_by(sentiment='Positive').count()
+    negative = query.filter_by(sentiment='Negative').count()
+    neutral = query.filter_by(sentiment='Neutral').count()
+    
+    feedbacks_with_rating = query.filter(Feedback.rating.isnot(None)).all()
     avg_rating = sum([f.rating for f in feedbacks_with_rating]) / len(feedbacks_with_rating) if feedbacks_with_rating else 0
     
-    feedback_types = db.session.query(
+    feedback_types_result = db.session.query(
         Feedback.feedback_type,
         db.func.count(Feedback.id)
-    ).group_by(Feedback.feedback_type).all()
+    )
+    
+    if time_filter == '10days':
+        cutoff_date = datetime.utcnow() - timedelta(days=10)
+        feedback_types_result = feedback_types_result.filter(Feedback.timestamp >= cutoff_date)
+    elif time_filter == '1month':
+        cutoff_date = datetime.utcnow() - timedelta(days=30)
+        feedback_types_result = feedback_types_result.filter(Feedback.timestamp >= cutoff_date)
+    
+    feedback_types = feedback_types_result.group_by(Feedback.feedback_type).all()
     
     types_data = {ft: count for ft, count in feedback_types}
     
@@ -212,8 +231,79 @@ def get_feedbacks():
     if current_user.role != 'admin':
         return jsonify({'error': 'Unauthorized'}), 403
     
-    feedbacks = Feedback.query.order_by(Feedback.timestamp.desc()).all()
+    time_filter = request.args.get('time_filter', 'all')
+    
+    query = Feedback.query
+    if time_filter == '10days':
+        cutoff_date = datetime.utcnow() - timedelta(days=10)
+        query = query.filter(Feedback.timestamp >= cutoff_date)
+    elif time_filter == '1month':
+        cutoff_date = datetime.utcnow() - timedelta(days=30)
+        query = query.filter(Feedback.timestamp >= cutoff_date)
+    
+    feedbacks = query.order_by(Feedback.timestamp.desc()).all()
     return jsonify([feedback.to_dict() for feedback in feedbacks])
+
+@app.route('/api/feedback/<int:feedback_id>', methods=['DELETE'])
+@login_required
+def delete_feedback(feedback_id):
+    if current_user.role != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+    
+    feedback = Feedback.query.get(feedback_id)
+    if not feedback:
+        return jsonify({'success': False, 'message': 'Feedback not found'}), 404
+    
+    if feedback.image_path:
+        image_full_path = os.path.join(app.config['UPLOAD_FOLDER'], feedback.image_path)
+        if os.path.exists(image_full_path):
+            os.remove(image_full_path)
+    
+    db.session.delete(feedback)
+    db.session.commit()
+    
+    return jsonify({'success': True, 'message': 'Feedback deleted successfully'})
+
+@app.route('/api/category-sentiment')
+@login_required
+def get_category_sentiment():
+    if current_user.role != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+    
+    time_filter = request.args.get('time_filter', 'all')
+    
+    query = Feedback.query
+    if time_filter == '10days':
+        cutoff_date = datetime.utcnow() - timedelta(days=10)
+        query = query.filter(Feedback.timestamp >= cutoff_date)
+    elif time_filter == '1month':
+        cutoff_date = datetime.utcnow() - timedelta(days=30)
+        query = query.filter(Feedback.timestamp >= cutoff_date)
+    
+    category_sentiment_result = db.session.query(
+        Feedback.feedback_type,
+        Feedback.sentiment,
+        db.func.count(Feedback.id)
+    )
+    
+    if time_filter == '10days':
+        cutoff_date = datetime.utcnow() - timedelta(days=10)
+        category_sentiment_result = category_sentiment_result.filter(Feedback.timestamp >= cutoff_date)
+    elif time_filter == '1month':
+        cutoff_date = datetime.utcnow() - timedelta(days=30)
+        category_sentiment_result = category_sentiment_result.filter(Feedback.timestamp >= cutoff_date)
+    
+    category_sentiment = category_sentiment_result.group_by(
+        Feedback.feedback_type,
+        Feedback.sentiment
+    ).all()
+    
+    data = {}
+    for category, sentiment, count in category_sentiment:
+        key = f"{category} - {sentiment}"
+        data[key] = count
+    
+    return jsonify(data)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

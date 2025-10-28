@@ -8,6 +8,15 @@
         <h1>Admin Dashboard</h1>
         <p class="subtitle">Comprehensive feedback analytics and insights</p>
 
+        <div class="time-filter-container">
+            <label for="timeFilter">Time Period:</label>
+            <select id="timeFilter">
+                <option value="all">All Time</option>
+                <option value="10days">Past 10 Days</option>
+                <option value="1month">Past 1 Month</option>
+            </select>
+        </div>
+
         <div class="stats-grid">
             <div class="stat-card">
                 <h3 id="totalFeedback">0</h3>
@@ -44,6 +53,10 @@
             <div class="chart-container">
                 <h2>Feedback Types</h2>
                 <canvas id="typeChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2>Category vs Sentiment</h2>
+                <canvas id="categorySentimentChart"></canvas>
             </div>
         </div>
 
@@ -82,6 +95,7 @@
                             <th>Sentiment</th>
                             <th>Image</th>
                             <th>Date</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="feedbackTableBody">
