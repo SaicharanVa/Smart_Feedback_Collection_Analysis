@@ -4,6 +4,7 @@
 A comprehensive feedback management system built with Flask, featuring sentiment analysis, user authentication, and advanced admin analytics. The application allows users to submit feedback with images and ratings, while administrators can analyze feedback through interactive visualizations and manage submissions.
 
 ## Recent Changes (October 28, 2025)
+- ✅ **Admin Feedback Restriction**: Prevented admin users from submitting feedback (admins can only view and manage)
 - ✅ Added delete feedback functionality for admin users
 - ✅ Implemented Category vs Sentiment donut chart visualization
 - ✅ Added time-based filtering (Past 10 days, Past 1 month, All time) for admin analytics
