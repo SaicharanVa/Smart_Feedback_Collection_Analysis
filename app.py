@@ -114,6 +114,10 @@ def admin():
 @app.route('/api/feedback', methods=['POST'])
 def submit_feedback():
     try:
+        # Prevent admin users from submitting feedback
+        if current_user.is_authenticated and current_user.role == 'admin':
+            return jsonify({'success': False, 'message': 'Administrators cannot submit feedback'}), 403
+        
         data = request.form
         name = data.get('name', 'Anonymous')
         feedback_type = data.get('feedback_type')

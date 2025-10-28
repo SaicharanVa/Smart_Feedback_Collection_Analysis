@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const imagePreview = document.getElementById('imagePreview');
     const feedbackResult = document.getElementById('feedbackResult');
 
+    // Only set up event listeners if the form exists (not admin user)
+    if (!feedbackForm || !imageInput) {
+        return;
+    }
+
     imageInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         
@@ -75,9 +80,13 @@ function openImageModal(imageSrc) {
     modalImg.src = imageSrc;
 }
 
-document.querySelector('.modal-close').addEventListener('click', function() {
-    document.getElementById('imageModal').style.display = 'none';
-});
+// Safe modal close handler
+const modalClose = document.querySelector('.modal-close');
+if (modalClose) {
+    modalClose.addEventListener('click', function() {
+        document.getElementById('imageModal').style.display = 'none';
+    });
+}
 
 window.onclick = function(event) {
     const modal = document.getElementById('imageModal');
