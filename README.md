@@ -66,3 +66,114 @@ pip install -r requirements.txt
 mkdir uploads
 
 # The database (feedback.db) and tables are created automatically on first run
+## ▶️ Run the Application
+
+
+```bash
+python app.py
+```
+
+Then open: 👉 [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+---
+
+## 📂 Project Structure
+
+```
+FeedbackHub/
+├── app.py                     # Main Flask application
+├── models.py                  # SQLAlchemy User & Feedback models
+├── requirements.txt            # Python dependencies
+├── init_db.py                  # Database initialization script
+│
+├── static/                     # Frontend assets
+│   ├── css/                    # Styling (style.css)
+│   ├── js/                     # Scripts (auth.js, admin.js, feedback.js)
+│   └── images/                 # Icons & logos
+│
+├── templates/                  # Jinja2 HTML templates
+│   ├── base.html               # Common layout
+│   ├── index.html              # Feedback form
+│   ├── login.html              # Login page
+│   ├── register.html           # Registration page
+│   ├── dashboard.html          # User dashboard
+│   └── admin.html              # Admin dashboard
+│
+└── uploads/                    # User-uploaded image storage
+```
+
+---
+
+## 🧪 Testing
+
+The project includes automated unit tests for authentication and route handling.
+
+```bash
+# Run tests
+pytest -q tests/
+```
+
+### Manual Testing Coverage:
+✅ Registration / Login  
+✅ Feedback Submission (text + rating + image)  
+✅ Sentiment Analysis Integration  
+✅ Admin Dashboard Visualization  
+✅ Data Export (CSV, PDF)  
+✅ Input and File Validation  
+
+---
+
+## 📈 Architecture & Workflow Overview
+
+### **Workflow Steps**
+1. **User Registration/Login** → Credentials verified & stored securely  
+2. **Feedback Submission** → Data + optional image sent to backend  
+3. **Sentiment Analysis** → Processed using VADER + TextBlob NLP  
+4. **Database Storage** → Results stored in SQLite database  
+5. **Admin Dashboard** → Data visualized using Chart.js  
+6. **Report Generation** → Export as CSV or PDF  
+
+---
+
+## 🏗️ System Architecture
+
+*(<img width="1648" height="567" alt="image" src="https://github.com/user-attachments/assets/e9a22223-f434-48db-a8e1-5af4f4f1301f" />
+)*
+
+---
+
+## 💡 Next Steps & Future Ideas
+
+- **Alembic Integration:** Replace manual migrations with database migration support  
+- **Role-Based Access Control (RBAC):** Add granular permissions for staff/admin roles  
+- **Rate Limiting:** Use Flask-Limiter to prevent spam submissions  
+- **Pagination & Filtering:** Optimize admin table performance for large datasets  
+- **AI-based NLP Models:** Upgrade with advanced models (BERT, DistilBERT)  
+- **Cloud Deployment:** Host on AWS, Azure, or Render for scalability  
+
+---
+
+## 👨‍💻 Author
+
+**Vanga Sai Charan**  
+Bachelor of Technology, Computer Science & Engineering  
+JNTUH University College of Engineering, Manthani  
+
+📫 **Email:** [saicharanvanga906@gmail.com](mailto:saicharanvanga906@gmail.com)  
+🔗 **GitHub:** [https://github.com/SaicharanVa](https://github.com/SaicharanVa)  
+💼 **LinkedIn:** [https://www.linkedin.com/in/sai-charan-va/](https://www.linkedin.com/in/sai-charan-va/)  
+
+---
+
+## ⭐ Acknowledgements
+
+- [Flask Documentation](https://flask.palletsprojects.com)  
+- [VADER Sentiment](https://github.com/cjhutto/vaderSentiment)  
+- [TextBlob NLP](https://textblob.readthedocs.io)  
+- [Chart.js](https://www.chartjs.org)  
+- [ReportLab](https://www.reportlab.com)
+
+---
+
+> **Note:** This project was developed as part of an industry project with **Tata Consultancy Services (TCS)**, demonstrating real-world application of full-stack development and AI integration.
+
