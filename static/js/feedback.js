@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('image');
     const imagePreview = document.getElementById('imagePreview');
     const feedbackResult = document.getElementById('feedbackResult');
-
-    // Only set up event listeners if the form exists (not admin user)
     if (!feedbackForm || !imageInput) {
         return;
     }
@@ -79,8 +77,6 @@ function openImageModal(imageSrc) {
     modal.style.display = 'block';
     modalImg.src = imageSrc;
 }
-
-// Safe modal close handler
 const modalClose = document.querySelector('.modal-close');
 if (modalClose) {
     modalClose.addEventListener('click', function() {

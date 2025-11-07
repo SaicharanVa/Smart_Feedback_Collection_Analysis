@@ -22,6 +22,7 @@ class Feedback(db.Model):
     sentiment = db.Column(db.String(20), nullable=False)
     score = db.Column(db.Float, nullable=False)
     image_path = db.Column(db.String(200), nullable=True)
+    email = db.Column(db.String(120), nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):
@@ -29,6 +30,7 @@ class Feedback(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'name': self.name,
+            'email': self.email,
             'feedback_type': self.feedback_type,
             'text': self.text,
             'rating': self.rating,

@@ -11,11 +11,14 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <a href="{{ url_for('index') }}">FeedbackHub</a>
+                <a href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="FeedbackHub" class="site-logo">
+                    <span class="brand-text">Feedback Analysis</span>
+                </a>
             </div>
             <ul class="nav-menu">
                 {% if current_user.is_authenticated %}
-                    <li><a href="{{ url_for('index') }}">Submit Feedback</a></li>
+                    <li><a href="{{ url_for('index') }}"></a></li>
                     {% if current_user.role == 'admin' %}
                         <li><a href="{{ url_for('admin') }}">Admin Dashboard</a></li>
                     {% else %}
@@ -45,8 +48,73 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 FeedbackHub. All rights reserved.</p>
+            <p>&copy; TCS industrial project</p>
         </div>
     </footer>
+    
+    <script>
+        window.addEventListener('pageshow', function(event) {
+            var navEntries = (performance.getEntriesByType && performance.getEntriesByType('navigation')) || [];
+            var navType = navEntries[0] && navEntries[0].type ? navEntries[0].type : (performance.navigation && performance.navigation.type);
+
+            if (event.persisted || navType === 'back_forward' || navType === 2) {
+                window.location.reload();
+            }
+        });
+    </script>
+    <script>
+        // Lightweight global client-side error reporter that uses sendBeacon
+        // so the handler does minimal work and doesn't block the main thread.
+        (function() {
+            // Keep payload very small and schedule send off the main thread so
+            // the handler returns immediately. This avoids browser "Violation"
+            // warnings for slow 'error' handlers.
+            function doSend(payload) {
+                try {
+                    var url = '/client_error';
+                    var data = JSON.stringify(payload);
+                    if (navigator.sendBeacon) {
+                        var blob = new Blob([data], { type: 'application/json' });
+                        navigator.sendBeacon(url, blob);
+                    } else {
+                        fetch(url, { method: 'POST', body: data, headers: { 'Content-Type': 'application/json' } }).catch(function(){});
+                    }
+                } catch (e) {
+                    // swallow
+                }
+            }
+
+            function scheduleSend(payload) {
+                try {
+                    // Schedule the heavy work off the current call stack.
+                    setTimeout(function() { doSend(payload); }, 0);
+                } catch (e) {
+                    // swallow
+                }
+            }
+
+            window.addEventListener('error', function(evt) {
+                try {
+                    var payload = {
+                        type: 'error',
+                        msg: evt.message || '',
+                        file: evt.filename || '',
+                        ln: evt.lineno || 0,
+                        col: evt.colno || 0,
+                        url: window.location.href
+                    };
+                    scheduleSend(payload);
+                } catch (e) {}
+            }, { passive: true });
+
+            window.addEventListener('unhandledrejection', function(evt) {
+                try {
+                    var reason = evt.reason && (evt.reason.message || String(evt.reason)) || '';
+                    var payload = { type: 'unhandledrejection', reason: reason, url: window.location.href };
+                    scheduleSend(payload);
+                } catch (e) {}
+            }, { passive: true });
+        })();
+    </script>
 </body>
 </html>

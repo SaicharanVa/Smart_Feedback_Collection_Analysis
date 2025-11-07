@@ -1,0 +1,17 @@
+ID,Name,Email,Type,Text,Rating,Sentiment,Score,Image,timestamp
+24,maruthi,,Bug Report,bad,N/A,Negative,-0.542,No,2025-11-04 17:38:44
+23,maruthi,,Feature Request,Very good,5,Positive,0.493,No,2025-11-03 13:42:21
+22,"""<img src=x onerror=alert(2)>""",,Bug Report,bad,N/A,Negative,-0.542,No,2025-11-03 09:36:06
+21,maruthi,,Bug Report,"""<script>alert(1)</script>""",5,Neutral,0.0,No,2025-11-03 09:31:37
+20,raju,raju@mail.com,General Feedback,Website is lagging frequently.,2,Negative,-0.273,Yes,2025-11-01 06:49:48
+19,raju,raju@mail.com,Bug Report,Worst Experience i had from your Service,1,Negative,-0.625,No,2025-11-01 05:40:59
+18,raju,raju@mail.com,Feature Request,Bad,N/A,Negative,-0.542,No,2025-11-01 05:36:58
+17,raju,raju@mail.com,Bug Report,Good,N/A,Positive,0.44,No,2025-11-01 05:36:41
+16,ram,ramu@gmail.com,Complaint,Good,5,Positive,0.44,No,2025-11-01 03:41:49
+15,raju,,Feature Request,Worst,5,Negative,-0.625,No,2025-10-30 12:46:04
+14,susanth,,General Feedback,"“Terrible experience, worst app ever!”",1,Negative,-0.659,No,2025-10-29 06:08:23
+13,sai charan vanga ,,General Feedback,good,5,Positive,0.44,Yes,2025-10-29 05:50:27
+11,raju,,Feature Request,bad,N/A,Negative,-0.542,No,2025-10-29 04:36:34
+10,raju,,General Feedback,raju ,N/A,Neutral,0.0,No,2025-10-29 04:32:16
+5,,,General Feedback,worst,N/A,Negative,-0.625,No,2025-10-28 09:23:13
+3,ramu,,Feature Request,good,5,Positive,0.44,No,2025-10-28 09:02:31

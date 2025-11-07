@@ -18,19 +18,28 @@
         <form id="feedbackForm" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Your Name (Optional)</label>
-                <input type="text" id="name" name="name" placeholder="Anonymous" 
-                       value="{% if current_user.is_authenticated %}{{ current_user.name }}{% endif %}">
+                <input type="text" id="name" name="name" placeholder="Anonymous"
+                       value="{% if current_user.is_authenticated %}{{ current_user.name }}{% endif %}"
+                       {% if current_user.is_authenticated %}readonly{% endif %}>
             </div>
+
+            {% if current_user.is_authenticated %}
+            <input type="hidden" name="email" value="{{ current_user.email }}">
+            {% else %}
+            <div class="form-group">
+                <label for="email">Contact Email (Optional)</label>
+                <input type="email" id="email" name="email" placeholder="Optional: we'll contact you if needed">
+            </div>
+            {% endif %}
 
             <div class="form-group">
                 <label for="feedback_type">Feedback Type *</label>
                 <select id="feedback_type" name="feedback_type" required>
                     <option value="">Select type</option>
-                    <option value="Bug Report">Bug Report</option>
-                    <option value="Feature Request">Feature Request</option>
-                    <option value="General Feedback">General Feedback</option>
-                    <option value="Complaint">Complaint</option>
-                    <option value="Praise">Praise</option>
+                    <option value="Bug Report">Product experience</option>
+                    <option value="Feature Request">Coustomer Service</option>
+                    <option value="General Feedback">Website experience</option>
+                    <option value="Complaint">General Feedback</option>
                 </select>
             </div>
 
@@ -57,7 +66,7 @@
             </div>
 
             <div class="form-group">
-                <label for="image">Attach Image (Optional)</label>
+                <label for="image">Attach Image for Website issues(Optional)</label>
                 <div class="image-upload-container">
                     <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg, image/gif">
                     <p class="file-info">Max file size: 5MB. Allowed formats: PNG, JPG, JPEG, GIF</p>

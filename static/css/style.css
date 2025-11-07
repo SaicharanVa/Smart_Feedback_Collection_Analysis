@@ -19,8 +19,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #3f4857;
+    color: #533737;
+    background-color: #355283;
 }
 
 .container {
@@ -47,6 +47,31 @@ body {
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Logo image in navbar */
+.nav-brand .site-logo {
+    height: 48px;
+    display: block;
+}
+
+.brand-text {
+    color: rgb(224, 210, 210);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .nav-brand .site-logo {
+        height: 36px;
+    }
+    .brand-text {
+        font-size: 1rem;
+    }
 }
 
 .nav-menu {

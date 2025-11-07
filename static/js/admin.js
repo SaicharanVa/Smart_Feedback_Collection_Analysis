@@ -23,6 +23,15 @@ async function loadDashboardData() {
             fetch(`/api/feedbacks?time_filter=${currentTimeFilter}`),
             fetch(`/api/category-sentiment?time_filter=${currentTimeFilter}`)
         ]);
+        const isJson = (res) => {
+            const ct = res.headers.get('Content-Type') || '';
+            return ct.includes('application/json');
+        };
+
+        if (!isJson(summaryResponse) || !isJson(feedbacksResponse) || !isJson(categorySentimentResponse)) {
+            window.location.href = '/login';
+            return;
+        }
 
         const summary = await summaryResponse.json();
         const feedbacks = await feedbacksResponse.json();
@@ -198,6 +207,7 @@ function populateTable(feedbacks) {
         row.innerHTML = `
             <td>${feedback.id}</td>
             <td>${feedback.name}</td>
+            <td>${feedback.email || ''}</td>
             <td>${feedback.feedback_type}</td>
             <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                 ${feedback.text}
@@ -248,7 +258,6 @@ async function deleteFeedback(feedbackId) {
 function setupFilters() {
     const sentimentFilter = document.getElementById('sentimentFilter');
     const typeFilter = document.getElementById('typeFilter');
-
     sentimentFilter.addEventListener('change', applyFilters);
     typeFilter.addEventListener('change', applyFilters);
 }
