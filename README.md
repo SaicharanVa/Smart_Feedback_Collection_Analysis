@@ -1,50 +1,48 @@
 🚀 Smart Feedback Collection and Sentiment Analysis Platform
+
 Feedback Analysis is a Flask-based full-stack web application that allows users to submit feedback, automatically analyzes sentiment using VADER and TextBlob NLP models, and provides administrators with a secure visual dashboard for insights and reporting.
 
 This project demonstrates end-to-end development — combining Flask (Python), NLP (VADER + TextBlob), data visualization (Chart.js), and secure authentication — to deliver a real-world feedback management solution.
 
-🌟 Key Features
-👥 User Features
-Authentication & Access Control: Secure registration and login with Flask-Login and password hashing via Werkzeug
+## 🌟 Key Features
 
-Intelligent Feedback Submission: Users (authenticated or anonymous) can submit textual feedback, rating (1-5), and optionally upload images
+### 👥 User Features
+- **Authentication & Access Control**: Secure registration and login with Flask-Login and password hashing via Werkzeug
+- **Intelligent Feedback Submission**: Users (authenticated or anonymous) can submit textual feedback, rating (1-5), and optionally upload images
+- **Real-Time Sentiment Analysis**: On submission, VADER and TextBlob models process feedback text and store sentiment categories and scores
+- **Feedback History**: Logged-in users can view their previously submitted feedback
 
-Real-Time Sentiment Analysis: On submission, VADER and TextBlob models process feedback text and store sentiment categories and scores
+### 🧠 Admin Features
+- **Admin Dashboard**: Interactive charts using Chart.js for sentiment distribution, rating trends, and feedback volume
+- **Advanced Analytics**: View aggregated statistics, search/filter feedback, and export reports
+- **Reporting Tools**: CSV and PDF report exports with date-based and sentiment-based filtering
+- **Secure File Handling**: Uploaded images validated with Pillow (PIL) and stored with sanitized filenames
 
-Feedback History: Logged-in users can view their previously submitted feedback
+## 💻 Tech Stack
 
-🧠 Admin Features
-Admin Dashboard: Interactive charts using Chart.js for sentiment distribution, rating trends, and feedback volume
+| Category | Technology | Purpose |
+|----------|------------|---------|
+| Backend Framework | Python 3.x, Flask | Web framework and server logic |
+| Database | SQLite (Flask-SQLAlchemy) | Lightweight persistence layer |
+| Authentication | Flask-Login, Werkzeug | Session management and password hashing |
+| NLP / Analysis | VADER, TextBlob Sentiment | Real-time sentiment classification |
+| Visualization | Chart.js | Dynamic charts for data analytics |
+| File Handling | Pillow (PIL) | Image validation and upload management |
+| Reporting | ReportLab | PDF report generation |
+| Testing | pytest | Automated unit testing |
+| Version Control | Git & GitHub | Source code management |
 
-Advanced Analytics: View aggregated statistics, search/filter feedback, and export reports
+## ⚙️ Setup and Installation
 
-Reporting Tools: CSV and PDF report exports with date-based and sentiment-based filtering
-
-Secure File Handling: Uploaded images validated with Pillow (PIL) and stored with sanitized filenames
-
-💻 Tech Stack
-Category	Technology	Purpose
-Backend Framework	Python 3.x, Flask	Web framework and server logic
-Database	SQLite (Flask-SQLAlchemy)	Lightweight persistence layer
-Authentication	Flask-Login, Werkzeug	Session management and password hashing
-NLP / Analysis	VADER, TextBlob Sentiment	Real-time sentiment classification
-Visualization	Chart.js	Dynamic charts for data analytics
-File Handling	Pillow (PIL)	Image validation and upload management
-Reporting	ReportLab	PDF report generation
-Testing	pytest	Automated unit testing
-Version Control	Git & GitHub	Source code management
-⚙️ Setup and Installation
-🧱 Prerequisites
+### 🧱 Prerequisites
 Ensure you have:
+- Python 3.x
+- pip (Python package manager)
+- Virtual environment (recommended)
 
-Python 3.x
+### 🔧 Installation Steps
 
-pip (Python package manager)
-
-Virtual environment (recommended)
-
-🔧 Installation Steps
-bash
+```bash
 # Clone the Repository
 git clone https://github.com/SaicharanVa/FeedbackHub.git
 cd FeedbackHub
@@ -60,128 +58,11 @@ source .venv/bin/activate
 
 # Install Dependencies
 pip install -r requirements.txt
-🗄️ Initialize Database & Folders
-bash
+
+## 🗄️ Initialize Database & Folders
+
+```bash
 # Create uploads directory
 mkdir uploads
 
 # The database (feedback.db) and tables are created automatically on first run
-▶️ Run the Application
-bash
-python app.py
-Then open: 👉 http://127.0.0.1:5000
-
-📂 Project Structure
-text
-FeedbackHub/
-├── app.py                     # Main Flask application
-├── models.py                  # SQLAlchemy User & Feedback models
-├── requirements.txt           # Python dependencies
-├── init_db.py                # Database initialization script
-│
-├── static/                    # Frontend assets
-│   ├── css/                   # Styling (style.css)
-│   ├── js/                    # Scripts (auth.js, admin.js, feedback.js)
-│   └── images/                # Icons & logos
-│
-├── templates/                 # Jinja2 HTML templates
-│   ├── base.html              # Common layout
-│   ├── index.html             # Feedback form
-│   ├── login.html             # Login page
-│   ├── register.html          # Registration page
-│   ├── dashboard.html         # User dashboard
-│   └── admin.html             # Admin dashboard
-│
-└── uploads/                   # User-uploaded image storage
-🧪 Testing
-The project includes automated unit tests for authentication and route handling.
-
-bash
-# Run tests
-pytest -q tests/
-Manual Testing Coverage:
-✅ Registration / Login
-
-✅ Feedback Submission (text + rating + image)
-
-✅ Sentiment Analysis Integration
-
-✅ Admin Dashboard Visualization
-
-✅ Data Export (CSV, PDF)
-
-✅ Input and File Validation
-
-📈 Architecture & Workflow Overview
-Workflow Steps
-User Registration/Login → Credentials verified & stored securely
-
-Feedback Submission → Data + optional image sent to backend
-
-Sentiment Analysis → Processed using VADER + TextBlob NLP
-
-Database Storage → Results stored in SQLite database
-
-Admin Dashboard → Data visualized using Chart.js
-
-Report Generation → Export as CSV or PDF
-
-🏗️ System Architecture
-
-
-
-
-
-
-
-
-
-
-
-💡 Next Steps & Future Ideas
-Alembic Integration: Replace manual migrations with database migration support
-
-Role-Based Access Control (RBAC): Add granular permissions for staff/admin roles
-
-Rate Limiting: Use Flask-Limiter to prevent spam submissions
-
-Pagination & Filtering: Optimize admin table performance for large datasets
-
-AI-based NLP Models: Upgrade with advanced models (BERT, DistilBERT)
-
-Cloud Deployment: Host on AWS, Azure, or Render for scalability
-
-👨‍💻 Author
-Vanga Sai Charan
-Bachelor of Technology, Computer Science & Engineering
-JNTUH University College of Engineering, Manthani
-
-📫 Email: saicharanvanga906@gmail.com
-
-🔗 GitHub: https://github.com/SaicharanVa
-
-💼 LinkedIn: https://www.linkedin.com/in/sai-charan-va/
-
-⭐ Acknowledgements
-Flask Documentation
-
-VADER Sentiment
-
-TextBlob NLP
-
-Chart.js
-
-ReportLab
-
-Note: This project was developed as part of an industry project with Tata Consultancy Services (TCS), demonstrating real-world application of full-stack development and AI integration.
-graph TD
-    A[User Browser] --> B[Flask Web Server]
-    B --> C[Authentication Service]
-    B --> D[Sentiment Analysis Engine]
-    D --> E[VADER Analyzer]
-    D --> F[TextBlob Fallback]
-    B --> G[Database Layer]
-    G --> H[SQLite Database]
-    B --> I[Admin Dashboard]
-    I --> J[Chart.js Visualizations]
-    I --> K[Report Generation]
