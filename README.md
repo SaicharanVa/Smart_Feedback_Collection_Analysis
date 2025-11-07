@@ -174,4 +174,14 @@ Chart.js
 ReportLab
 
 Note: This project was developed as part of an industry project with Tata Consultancy Services (TCS), demonstrating real-world application of full-stack development and AI integration.
-
+graph TD
+    A[User Browser] --> B[Flask Web Server]
+    B --> C[Authentication Service]
+    B --> D[Sentiment Analysis Engine]
+    D --> E[VADER Analyzer]
+    D --> F[TextBlob Fallback]
+    B --> G[Database Layer]
+    G --> H[SQLite Database]
+    B --> I[Admin Dashboard]
+    I --> J[Chart.js Visualizations]
+    I --> K[Report Generation]
